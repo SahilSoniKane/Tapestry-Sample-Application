@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html t:type="layout" title="Employees | sampleapplication"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd" xmlns:p="tapestry:parameter">
+<body class="container">
+<h3>Grid</h3>
+
+<div class="eg">
+    <t:if test="employees">
+    <t:grid t:source="employees" row="employee" exclude="age, address" rowsPerPage="4">
+        <p:idCell>
+            <t:pagelink page="EmployeeDetails" context="employee.id">${employee.id}</t:pagelink>
+        </p:idCell>
+    </t:grid>
+        <p:else>
+            THERE IS NO EMPLOYEE IN YOUR COMPANY!! <br/>Click <t:pagelink page="NewEmployee">Here</t:pagelink> to add employees.
+        </p:else>
+    </t:if>
+</div>
+</body>
+</html>

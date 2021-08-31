@@ -1,0 +1,14 @@
+<html t:type="layout" title="Login | sampleapplication"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <t:form t:id="login">
+            <h2>Please sign in</h2>
+            <t:textfield t:id="username" class="input-block-level" validate="required, email" placeholder="Username"/>
+            <t:passwordfield t:id="password" class="input-block-level" validate="required" placeholder="Password"/>
+            <t:submit class="btn btn-large btn-primary" value="Sign in"/>
+        </t:form>
+    </div>
+</div>
+</html>
