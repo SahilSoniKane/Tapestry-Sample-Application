@@ -6,7 +6,7 @@
 <h3>Grid</h3>
 
 <div class="eg">
-    <t:if test="employees">
+    <t:if test= "employees">
     <t:grid t:source="employees" row="employee" exclude="age, address" rowsPerPage="4">
         <p:idCell>
             <t:pagelink page="EmployeeDetails" context="employee.id">${employee.id}</t:pagelink>

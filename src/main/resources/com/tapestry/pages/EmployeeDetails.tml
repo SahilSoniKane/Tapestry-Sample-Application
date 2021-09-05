@@ -4,12 +4,12 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd" xmlns:p="tapestry:parameter">
 <body class="container">
 <div class="eg">
-    <t:if test="employeeDetails">
+    <t:if test="employee">
     <h1>Employee Detail :</h1><br/>
-    <h5><b>Employee ID</b>      :   ${EmployeeDetails.id}</h5>
-    <h5><b>Employee Name</b>    :   ${EmployeeDetails.name}</h5>
-    <h5><b>Employee Age</b>     :   ${EmployeeDetails.age}</h5>
-    <h5><b>Employee Address</b> :   ${EmployeeDetails.address}</h5>
+    <h5><b>Employee ID</b>      :   ${employee.id}</h5>
+    <h5><b>Employee Name</b>    :   ${employee.name}</h5>
+    <h5><b>Employee Age</b>     :   ${employee.age}</h5>
+    <h5><b>Employee Address</b> :   ${employee.address}</h5>
         <p:else>
             There are no details to show!!
         </p:else>

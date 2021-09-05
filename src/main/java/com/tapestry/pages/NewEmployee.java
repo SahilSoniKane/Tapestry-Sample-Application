@@ -1,6 +1,7 @@
 package com.tapestry.pages;
 
 import com.tapestry.entities.Employee;
+import com.tapestry.services.EmployeeService;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
@@ -9,8 +10,11 @@ import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.TextArea;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.PageRenderLinkSource;
 
-public class NewEmployee extends EmployeeList{
+import java.util.regex.Pattern;
+
+public class NewEmployee {
 
     @Inject
     private AlertManager alertManager;
@@ -28,6 +32,9 @@ public class NewEmployee extends EmployeeList{
     private TextArea addressArea;
 
     @Property
+    private int id;
+
+    @Property
     private String name;
 
     @Property
@@ -39,37 +46,24 @@ public class NewEmployee extends EmployeeList{
     @InjectPage
     private EmployeeDetails employeeDetails;
 
-    @InjectPage
-    private EmployeeList employeeList;
+    @Inject
+    private PageRenderLinkSource pageRenderLinkSource;
 
-    @Property
-    private int id;
+    @Inject
+    private EmployeeService employeeService;
 
     void onValidateFromInputs() {
-        for (int i = 0; i < name.length(); i++) {
-            if ((int)name.charAt(i) > 0 & (int)name.charAt(i) < 48 || (int)name.charAt(i) > 57 & (int)name.charAt(i) < 65 || (int)name.charAt(i) > 90 & (int)name.charAt(i) < 97 || (int)name.charAt(i) > 122 & (int)name.charAt(i) < 128)
-                inputs.recordError(nameField, "Name can only contain AlphaNumeric only");
-        }
-
-        if (age < 18 | age > 65)
+        String regex = "^[a-zA-Z\\s]*$";
+        if (!Pattern.compile(regex).matcher(name).matches())
+            inputs.recordError(nameField, "Name can only contain AlphaNumeric only");
+        if (age < 18 || age > 65)
             inputs.recordError(ageField, "Age should be between 18-65");
     }
 
     Object onSuccessFromInputs() {
         alertManager.success("Saved Successfully");
-        if (!employeeList.listOfEmployees.isEmpty()) {
-            for (Employee employee : employeeList.listOfEmployees) {
-                if (this.id <= employee.getId())
-                    this.id++;
-            }
-                employeeList.addEmployee(this.id, this.name, this.age, this.address);
-        }
-        else {
-            employeeList.addEmployee(this.id, this.name, this.age, this.address);
-        }
-        employeeDetails.set(id, name, age, address);
-
-        return EmployeeDetails.class;
+        Employee employee = employeeService.saveEmployee(new Employee(name, age, address));
+        return this.pageRenderLinkSource.createPageRenderLinkWithContext(EmployeeDetails.class, employee.getId());
     }
 
     void onFailureFromInputs() {

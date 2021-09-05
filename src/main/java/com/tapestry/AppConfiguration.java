@@ -1,6 +1,6 @@
 package com.tapestry;
 
-import org.apache.tapestry5.TapestryFilter;
+import org.apache.tapestry5.spring.TapestrySpringFilter;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -31,9 +31,9 @@ public class AppConfiguration
                 servletContext.setInitParameter("tapestry.app-package", "com.tapestry");
                 servletContext.setInitParameter("tapestry.development-modules", "com.tapestry.services.DevelopmentModule");
                 servletContext.setInitParameter("tapestry.qa-modules", "com.foo.services.QaModule");
-                //servletContext.setInitParameter("tapestry.use-external-spring-context", "true");
-                servletContext.addFilter("app", TapestryFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR), false, "/*");
-                //servletContext.addFilter("app", TapestrySpringFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR), false, "/*");
+                servletContext.setInitParameter("tapestry.use-external-spring-context", "true");
+                //servletContext.addFilter("app", TapestryFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR), false, "/*");
+                servletContext.addFilter("app", TapestrySpringFilter.class).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR), false, "/*");
                 servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
             }
         };

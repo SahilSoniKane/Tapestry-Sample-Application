@@ -1,24 +1,25 @@
 package com.tapestry.pages;
 
 import com.tapestry.entities.Employee;
+import com.tapestry.services.EmployeeService;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employees extends EmployeeList{
+public class Employees {
 
     @Property
     private Employee employee;
 
-    @InjectPage
-    private EmployeeList employeeList;
+    @Inject
+    private EmployeeService employeeService;
 
     public List<Employee> getEmployees() {
-        List<Employee> listOfEmployees = employeeList.getEmployeeList();
 
-        return listOfEmployees;
+        return employeeService.getAllEmployees();
     }
 }
 //onActivate and onPassivate

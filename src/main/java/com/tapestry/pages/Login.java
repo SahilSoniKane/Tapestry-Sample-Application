@@ -1,5 +1,6 @@
 package com.tapestry.pages;
 
+import com.tapestry.services.LoginService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.tapestry5.alerts.AlertManager;
@@ -32,12 +33,15 @@ public class Login
     @Property
     private String password;
 
+    @Inject
+    private LoginService loginService;
+
     void onValidateFromLogin()
     {
-        if (!userName.equals("sahil@gmail.com"))
-            login.recordError(userNameField, "Try with user: sahil@gmail.com");
+        if (!loginService.isValidUserName(userName))
+            login.recordError(userNameField, "Try with user: test@gmail.com");
 
-        if (!password.equals("password"))
+        if (!loginService.isValidPassword(password))
             login.recordError(passwordField, "Try with password: password");
     }
 
